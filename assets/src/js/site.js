@@ -34,7 +34,7 @@ class Game {
 			accellX: 3, // Horizontal acceleration
 			accellY: 2, // vertical acceleration
 			decelX: 0.8, // Rate at which the horizontal velocity decays per frame
-			decelY: 1, // Vertical deceleration
+			decelY: 0.8*(1+((75-10)/1000)), // Vertical deceleration
 		};
 
 		// update player position to start off with
@@ -117,31 +117,29 @@ class Game {
 	}
 
 	handleMovement() {
-		let movement = this.player;
+		let char = this.player;
 
 		// handle what actually happens when
-		if(this.controls.rightPressed) {
-			if (movement.velX < movement.speedX) {
-				movement.velX += movement.accellX;
-			}
+		if(this.controls.rightPressed && char.velX < char.speedX) {
+			char.velX += char.accellX;
 		}
-		if(this.controls.leftPressed) {
-			if (movement.velX > -movement.speedX) {
-				movement.velX -= movement.accellX;
-			}
+		if(this.controls.leftPressed && char.velX > -char.speedX) {
+			char.velX -= char.accellX;
 		}
-		if(this.controls.upPressed) {
-			movement.y -= 7;
+		if(this.controls.upPressed && char.velY < char.speedY) {
+			char.velY -= char.accellY;
 		}
-		if(this.controls.downPressed) {
-			movement.y += 7;
+		if(this.controls.downPressed && char.velY > -char.speedY) {
+			char.velY += char.accellY;
 		}
 
-		// Decay the movement
-		movement.velX *= movement.decelX;
+		// Decay the velocity over time
+		char.velX *= char.decelX;
+		char.velY *= char.decelY;
 
-		movement.x += movement.velX;
-		movement.y += movement.velY;
+		// Update the player's position
+		char.x += char.velX;
+		char.y += char.velY;
 	}
 
 	// Clear and redraw the canvas
