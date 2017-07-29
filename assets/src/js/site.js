@@ -18,13 +18,14 @@ class Game {
 			leftPressed: false,
 			rightPressed: false,
 			upPressed: false,
-			downPressed: false
+			downPressed: false,
+			spacePressed: false
 		};
 
 		// The player object
 		this.player = {
-			width: 10, // Height of player character in px
-			height: 75, // Width of player character in px
+			width: 48, // Height of player character in px
+			height: 48, // Width of player character in px
 			x: 0, // X Position on the canvas
 			y: 0, // Y position on the canvas
 			velX: 0, // Current horizontal Movement Speed
@@ -34,7 +35,7 @@ class Game {
 			accellX: 3, // Horizontal acceleration
 			accellY: 2, // vertical acceleration
 			decelX: 0.8, // Rate at which the horizontal velocity decays per frame
-			decelY: 0.8*(1+((75-10)/1000)), // Vertical deceleration
+			decelY: 0.8, // Vertical deceleration
 		};
 
 		// update player position to start off with
@@ -64,6 +65,9 @@ class Game {
 		if (e.keyCode == 40) {
 			this.controls.downPressed = true;
 		}
+		if (e.keyCode == 32) {
+			this.controls.spacePressed = true;
+		}
 	}
 
 	keyUpHandler(e) {
@@ -78,6 +82,9 @@ class Game {
 		}
 		if (e.keyCode == 40) {
 			this.controls.downPressed = false;
+		}
+		if (e.keyCode == 32) {
+			this.controls.spacePressed = false;
 		}
 	}
 
@@ -103,7 +110,9 @@ class Game {
 
 	}
 
-
+	/** ======================
+	* Player Sprite
+	====================== **/
 
 
 	/** ======================

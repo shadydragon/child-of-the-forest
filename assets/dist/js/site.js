@@ -136,8 +136,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         exports.toByteArray = b64ToByteArray;
         exports.fromByteArray = uint8ToBase64;
       })(typeof exports === 'undefined' ? this.base64js = {} : exports);
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/base64-js/lib/b64.js", "/../../node_modules/base64-js/lib");
-  }, { "buffer": 2, "rH1JPG": 4 }], 2: [function (require, module, exports) {
+    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\base64-js\\lib\\b64.js", "/..\\..\\node_modules\\base64-js\\lib");
+  }, { "buffer": 2, "e/U+97": 4 }], 2: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       /*!
        * The buffer module from node.js, for the browser.
@@ -1182,8 +1182,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       function assert(test, message) {
         if (!test) throw new Error(message || 'Failed assertion');
       }
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/buffer/index.js", "/../../node_modules/buffer");
-  }, { "base64-js": 1, "buffer": 2, "ieee754": 3, "rH1JPG": 4 }], 3: [function (require, module, exports) {
+    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\buffer\\index.js", "/..\\..\\node_modules\\buffer");
+  }, { "base64-js": 1, "buffer": 2, "e/U+97": 4, "ieee754": 3 }], 3: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       exports.read = function (buffer, offset, isLE, mLen, nBytes) {
         var e, m;
@@ -1269,8 +1269,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         buffer[offset + i - d] |= s * 128;
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/ieee754/index.js", "/../../node_modules/ieee754");
-  }, { "buffer": 2, "rH1JPG": 4 }], 4: [function (require, module, exports) {
+    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\ieee754\\index.js", "/..\\..\\node_modules\\ieee754");
+  }, { "buffer": 2, "e/U+97": 4 }], 4: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       // shim for using process in browser
 
@@ -1336,8 +1336,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       process.chdir = function (dir) {
         throw new Error('process.chdir is not supported');
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/process/browser.js", "/../../node_modules/process");
-  }, { "buffer": 2, "rH1JPG": 4 }], 5: [function (require, module, exports) {
+    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\process\\browser.js", "/..\\..\\node_modules\\process");
+  }, { "buffer": 2, "e/U+97": 4 }], 5: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       'use strict';
 
@@ -1360,13 +1360,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             leftPressed: false,
             rightPressed: false,
             upPressed: false,
-            downPressed: false
+            downPressed: false,
+            spacePressed: false
           };
 
           // The player object
           this.player = {
-            width: 10, // Height of player character in px
-            height: 75, // Width of player character in px
+            width: 48, // Height of player character in px
+            height: 48, // Width of player character in px
             x: 0, // X Position on the canvas
             y: 0, // Y position on the canvas
             velX: 0, // Current horizontal Movement Speed
@@ -1376,7 +1377,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             accellX: 3, // Horizontal acceleration
             accellY: 2, // vertical acceleration
             decelX: 0.8, // Rate at which the horizontal velocity decays per frame
-            decelY: 0.8 * (1 + (75 - 10) / 1000) // Vertical deceleration
+            decelY: 0.8 // Vertical deceleration
           };
 
           // update player position to start off with
@@ -1409,6 +1410,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             if (e.keyCode == 40) {
               this.controls.downPressed = true;
             }
+            if (e.keyCode == 32) {
+              this.controls.spacePressed = true;
+            }
           }
         }, {
           key: "keyUpHandler",
@@ -1424,6 +1428,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
             if (e.keyCode == 40) {
               this.controls.downPressed = false;
+            }
+            if (e.keyCode == 32) {
+              this.controls.spacePressed = false;
             }
           }
 
@@ -1442,6 +1449,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.game.context.fill();
             this.game.context.closePath();
           }
+
+          /** ======================
+          * Player Sprite
+          ====================== **/
 
           /** ======================
           * Game Loop
@@ -1531,6 +1542,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_26b40949.js", "/");
-  }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
+    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_607136e6.js", "/");
+  }, { "buffer": 2, "e/U+97": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map
