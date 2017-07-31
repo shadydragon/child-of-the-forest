@@ -1535,7 +1535,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 // Mark them as airborne
                 char.isAirborne = true;
               } else if (char.isAirborne == true) {
-                console.log(this.game.canvas.height - this.player.height - char.y, char.velY);
                 // Stop the character in it's tracks
                 char.velY = 0;
 
@@ -1548,7 +1547,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } else {
               // if we are in the air
               // we're going up
-              if (char.velY < 0) {
+              if (char.velY <= 0) {
                 char.velY += char.decelY;
               } else {
                 if (char.velY < char.speedY) {
@@ -1558,9 +1557,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               char.y += char.velY;
             }
-
-            // Update the player's position
-            // char.y += char.velY;
           }
 
           // Clear and redraw the canvas
@@ -1611,5 +1607,5 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_f12e5f55.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_e6375738.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);

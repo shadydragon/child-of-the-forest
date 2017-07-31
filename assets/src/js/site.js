@@ -186,7 +186,6 @@ class Game {
 				// Mark them as airborne
 				char.isAirborne = true;
 			} else if (char.isAirborne == true) {
-				console.log((this.game.canvas.height - this.player.height) - char.y, char.velY);
 				// Stop the character in it's tracks
 				char.velY = 0;
 
@@ -200,7 +199,7 @@ class Game {
 		} else {
 			// if we are in the air
 			// we're going up
-			if (char.velY < 0) {
+			if (char.velY <= 0) {
 				char.velY += char.decelY;
 			} else {
 				if (char.velY < char.speedY) {
@@ -211,9 +210,6 @@ class Game {
 			char.y += char.velY;
 		}
 
-
-		// Update the player's position
-		// char.y += char.velY;
 	}
 
 
