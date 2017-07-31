@@ -44,7 +44,8 @@ class Game {
 
 		// update player position to start off with
 		this.player.x = (this.game.canvas.width - this.player.width) / 2;
-		this.player.y = (this.game.canvas.height - this.player.height) / 2;
+		//this.player.y = (this.game.canvas.height - this.player.height);
+		this.player.y = 0;
 
 		// This is magic... just don't question it but it makes the loop work
 		this.gameLoop = this.gameLoop.bind(this);
@@ -126,9 +127,12 @@ class Game {
 		// if we are on the bottom of the stage
 		// -1px to make sure we can see the entire sprite
 		if (this.player.y >= (this.game.canvas.height - this.player.height-1)) {
-			return true;
+			return {
+				status: true,
+				floorPos: this.game.canvas.height
+			};
 		} else {
-			return false;
+			return {status: false};
 		}
 	}
 
@@ -143,6 +147,11 @@ class Game {
 	canMoveUp() {
 		 return true;
 	}
+
+	/** ======================
+	* Player NPC interactions
+	====================== **/
+
 
 	/** ======================
 	* Game Loop
@@ -174,7 +183,8 @@ class Game {
 		char.x += char.velX;
 
 		// Handle Vertical Motion
-		if (this.isOnGround()) {
+		console.log((this.game.canvas.height - this.player.height) - char.y);
+		if (this.isOnGround().status) {
 			// if we are on or under a walkable surface
 
 			// if we press the jump button and the character is not airborne at the moment

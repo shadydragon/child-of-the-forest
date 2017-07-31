@@ -1386,7 +1386,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           // update player position to start off with
           this.player.x = (this.game.canvas.width - this.player.width) / 2;
-          this.player.y = (this.game.canvas.height - this.player.height) / 2;
+          //this.player.y = (this.game.canvas.height - this.player.height);
+          this.player.y = 0;
 
           // This is magic... just don't question it but it makes the loop work
           this.gameLoop = this.gameLoop.bind(this);
@@ -1468,9 +1469,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             // if we are on the bottom of the stage
             // -1px to make sure we can see the entire sprite
             if (this.player.y >= this.game.canvas.height - this.player.height - 1) {
-              return true;
+              return {
+                status: true,
+                floorPos: this.game.canvas.height
+              };
             } else {
-              return false;
+              return { status: false };
             }
           }
         }, {
@@ -1488,6 +1492,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           value: function canMoveUp() {
             return true;
           }
+
+          /** ======================
+          * Player NPC interactions
+          ====================== **/
 
           /** ======================
           * Game Loop
@@ -1523,7 +1531,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             char.x += char.velX;
 
             // Handle Vertical Motion
-            if (this.isOnGround()) {
+            console.log(this.game.canvas.height - this.player.height - char.y);
+            if (this.isOnGround().status) {
               // if we are on or under a walkable surface
 
               // if we press the jump button and the character is not airborne at the moment
@@ -1607,5 +1616,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_e6375738.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_1ea1be94.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
+//# sourceMappingURL=site.js.map
