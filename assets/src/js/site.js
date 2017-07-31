@@ -14,10 +14,13 @@ class Game {
 		this.game.context = this.game.canvas.getContext("2d");
 		this.game.world = {
 			gravity: 0.0098, // Accelleration due to gravity, per frame
-			offset: 0,
+			offset: {
+				x: 0,
+				y: 0
+			},
 			platforms: [
 				{thing: 'test2'},
-				{thing:'test1'}
+				{thing: 'test1'}
 			]
 		};
 
@@ -44,7 +47,8 @@ class Game {
 			accellY: 2, // vertical acceleration
 			decelX: 0.8, // Rate at which the horizontal velocity decays per frame
 			decelY: 0.9, // Vertical deceleration
-			isAirborne: false // Are we flying?
+			isAirborne: false, // Are we flying?
+			sprite: '../img/sprite-run-new.png'
 		};
 
 		// update player position to start off with
@@ -100,6 +104,10 @@ class Game {
 	/** ======================
 	* World object creation
 	====================== **/
+	createPlatform() {
+
+	}
+
 	drawPlatform() {
 		this.game.world.platforms.forEach(function(object,index) {
 

@@ -1356,7 +1356,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.game.context = this.game.canvas.getContext("2d");
           this.game.world = {
             gravity: 0.0098, // Accelleration due to gravity, per frame
-            offset: 0,
+            offset: {
+              x: 0,
+              y: 0
+            },
             platforms: [{ thing: 'test2' }, { thing: 'test1' }]
           };
 
@@ -1383,7 +1386,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             accellY: 2, // vertical acceleration
             decelX: 0.8, // Rate at which the horizontal velocity decays per frame
             decelY: 0.9, // Vertical deceleration
-            isAirborne: false // Are we flying?
+            isAirborne: false, // Are we flying?
+            sprite: '../img/sprite-run-new.png'
           };
 
           // update player position to start off with
@@ -1444,6 +1448,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           * World object creation
           ====================== **/
 
+        }, {
+          key: "createPlatform",
+          value: function createPlatform() {}
         }, {
           key: "drawPlatform",
           value: function drawPlatform() {
@@ -1630,6 +1637,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_22b41fce.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_59eb61f9.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map
