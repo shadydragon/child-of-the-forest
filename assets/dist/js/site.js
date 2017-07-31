@@ -136,8 +136,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         exports.toByteArray = b64ToByteArray;
         exports.fromByteArray = uint8ToBase64;
       })(typeof exports === 'undefined' ? this.base64js = {} : exports);
-    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\base64-js\\lib\\b64.js", "/..\\..\\node_modules\\base64-js\\lib");
-  }, { "buffer": 2, "e/U+97": 4 }], 2: [function (require, module, exports) {
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/base64-js/lib/b64.js", "/../../node_modules/base64-js/lib");
+  }, { "buffer": 2, "rH1JPG": 4 }], 2: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       /*!
        * The buffer module from node.js, for the browser.
@@ -1182,8 +1182,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       function assert(test, message) {
         if (!test) throw new Error(message || 'Failed assertion');
       }
-    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\buffer\\index.js", "/..\\..\\node_modules\\buffer");
-  }, { "base64-js": 1, "buffer": 2, "e/U+97": 4, "ieee754": 3 }], 3: [function (require, module, exports) {
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/buffer/index.js", "/../../node_modules/buffer");
+  }, { "base64-js": 1, "buffer": 2, "ieee754": 3, "rH1JPG": 4 }], 3: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       exports.read = function (buffer, offset, isLE, mLen, nBytes) {
         var e, m;
@@ -1269,8 +1269,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         buffer[offset + i - d] |= s * 128;
       };
-    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\ieee754\\index.js", "/..\\..\\node_modules\\ieee754");
-  }, { "buffer": 2, "e/U+97": 4 }], 4: [function (require, module, exports) {
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/ieee754/index.js", "/../../node_modules/ieee754");
+  }, { "buffer": 2, "rH1JPG": 4 }], 4: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       // shim for using process in browser
 
@@ -1336,8 +1336,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       process.chdir = function (dir) {
         throw new Error('process.chdir is not supported');
       };
-    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/..\\..\\node_modules\\process\\browser.js", "/..\\..\\node_modules\\process");
-  }, { "buffer": 2, "e/U+97": 4 }], 5: [function (require, module, exports) {
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/../../node_modules/process/browser.js", "/../../node_modules/process");
+  }, { "buffer": 2, "rH1JPG": 4 }], 5: [function (require, module, exports) {
     (function (process, global, Buffer, __argument0, __argument1, __argument2, __argument3, __filename, __dirname) {
       'use strict';
 
@@ -1354,6 +1354,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.game = {};
           this.game.canvas = canvas;
           this.game.context = this.game.canvas.getContext("2d");
+          this.game.world = {
+            gravity: 0.0098 // Accelleration due to gravity, per frame
+          };
 
           // Controls object
           this.controls = {
@@ -1373,16 +1376,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             velX: 0, // Current horizontal Movement Speed
             velY: 0, // Current vertical movement speed
             speedX: 20, // Max horizontal speed
-            speedY: 10, // Max vertical speed
+            speedY: 20, // Max vertical speed, Terminal velocity
             accellX: 3, // Horizontal acceleration
             accellY: 2, // vertical acceleration
             decelX: 0.8, // Rate at which the horizontal velocity decays per frame
-            decelY: 0.8 // Vertical deceleration
+            decelY: 0.9, // Vertical deceleration
+            isAirborne: false // Are we flying?
           };
 
           // update player position to start off with
           this.player.x = (this.game.canvas.width - this.player.width) / 2;
-          this.player.y = this.game.canvas.height - this.player.height;
+          this.player.y = (this.game.canvas.height - this.player.height) / 2;
 
           // This is magic... just don't question it but it makes the loop work
           this.gameLoop = this.gameLoop.bind(this);
@@ -1455,6 +1459,37 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           ====================== **/
 
           /** ======================
+          * Player World interactions
+          ====================== **/
+
+        }, {
+          key: "isOnGround",
+          value: function isOnGround() {
+            // if we are on the bottom of the stage
+            // -1px to make sure we can see the entire sprite
+            if (this.player.y >= this.game.canvas.height - this.player.height - 1) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        }, {
+          key: "canMoveLeft",
+          value: function canMoveLeft() {
+            return true;
+          }
+        }, {
+          key: "canMoveRight",
+          value: function canMoveRight() {
+            return true;
+          }
+        }, {
+          key: "canMoveUp",
+          value: function canMoveUp() {
+            return true;
+          }
+
+          /** ======================
           * Game Loop
           ====================== **/
 
@@ -1471,6 +1506,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           value: function handleMovement() {
             var char = this.player;
 
+            // Handle Horizontal motion
+
             // handle what actually happens when
             if (this.controls.rightPressed && char.velX < char.speedX) {
               char.velX += char.accellX;
@@ -1478,20 +1515,52 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             if (this.controls.leftPressed && char.velX > -char.speedX) {
               char.velX -= char.accellX;
             }
-            if (this.controls.upPressed && char.velY < char.speedY) {
-              char.velY -= char.accellY;
-            }
-            if (this.controls.downPressed && char.velY > -char.speedY) {
-              char.velY += char.accellY;
-            }
 
             // Decay the velocity over time
             char.velX *= char.decelX;
-            char.velY *= char.decelY;
 
             // Update the player's position
             char.x += char.velX;
-            char.y += char.velY;
+
+            // Handle Vertical Motion
+            if (this.isOnGround()) {
+              // if we are on or under a walkable surface
+
+              // if we press the jump button and the character is not airborne at the moment
+              if ((this.controls.upPressed || this.controls.spacePressed) && !char.isAirborne) {
+                // Launch them
+                char.velY -= char.speedY;
+                char.y += char.velY;
+
+                // Mark them as airborne
+                char.isAirborne = true;
+              } else if (char.isAirborne == true) {
+                console.log(this.game.canvas.height - this.player.height - char.y, char.velY);
+                // Stop the character in it's tracks
+                char.velY = 0;
+
+                // the frame render is too slow to detect we've hit anything so keeps going. we cheet by just moving the character back to where they should be
+                char.y += char.velY - 13.399999999999693;
+
+                // Mark them as not airborne
+                char.isAirborne = false;
+              }
+            } else {
+              // if we are in the air
+              // we're going up
+              if (char.velY < 0) {
+                char.velY += char.decelY;
+              } else {
+                if (char.velY < char.speedY) {
+                  char.velY *= char.accellY;
+                }
+              }
+
+              char.y += char.velY;
+            }
+
+            // Update the player's position
+            // char.y += char.velY;
           }
 
           // Clear and redraw the canvas
@@ -1542,6 +1611,5 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("e/U+97"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_607136e6.js", "/");
-  }, { "buffer": 2, "e/U+97": 4 }] }, {}, [5]);
-//# sourceMappingURL=site.js.map
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_f12e5f55.js", "/");
+  }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);

@@ -12,6 +12,9 @@ class Game {
 		this.game = {};
 		this.game.canvas = canvas;
 		this.game.context = this.game.canvas.getContext("2d");
+		this.game.world = {
+			gravity: 0.0098, // Accelleration due to gravity, per frame
+		};
 
 		// Controls object
 		this.controls = {
@@ -31,16 +34,17 @@ class Game {
 			velX: 0, // Current horizontal Movement Speed
 			velY: 0, // Current vertical movement speed
 			speedX: 20, // Max horizontal speed
-			speedY: 10, // Max vertical speed
+			speedY: 20, // Max vertical speed, Terminal velocity
 			accellX: 3, // Horizontal acceleration
 			accellY: 2, // vertical acceleration
 			decelX: 0.8, // Rate at which the horizontal velocity decays per frame
-			decelY: 0.8, // Vertical deceleration
+			decelY: 0.9, // Vertical deceleration
+			isAirborne: false // Are we flying?
 		};
 
 		// update player position to start off with
 		this.player.x = (this.game.canvas.width - this.player.width) / 2;
-		this.player.y = (this.game.canvas.height - this.player.height);
+		this.player.y = (this.game.canvas.height - this.player.height) / 2;
 
 		// This is magic... just don't question it but it makes the loop work
 		this.gameLoop = this.gameLoop.bind(this);
@@ -116,6 +120,31 @@ class Game {
 
 
 	/** ======================
+	* Player World interactions
+	====================== **/
+	isOnGround() {
+		// if we are on the bottom of the stage
+		// -1px to make sure we can see the entire sprite
+		if (this.player.y >= (this.game.canvas.height - this.player.height-1)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	canMoveLeft() {
+		return true;
+	}
+
+	canMoveRight() {
+		return true;
+	}
+
+	canMoveUp() {
+		 return true;
+	}
+
+	/** ======================
 	* Game Loop
 	====================== **/
 
@@ -128,6 +157,8 @@ class Game {
 	handleMovement() {
 		let char = this.player;
 
+		// Handle Horizontal motion
+
 		// handle what actually happens when
 		if(this.controls.rightPressed && char.velX < char.speedX) {
 			char.velX += char.accellX;
@@ -135,21 +166,56 @@ class Game {
 		if(this.controls.leftPressed && char.velX > -char.speedX) {
 			char.velX -= char.accellX;
 		}
-		if(this.controls.upPressed && char.velY < char.speedY) {
-			char.velY -= char.accellY;
-		}
-		if(this.controls.downPressed && char.velY > -char.speedY) {
-			char.velY += char.accellY;
-		}
 
 		// Decay the velocity over time
 		char.velX *= char.decelX;
-		char.velY *= char.decelY;
 
 		// Update the player's position
 		char.x += char.velX;
-		char.y += char.velY;
+
+		// Handle Vertical Motion
+		if (this.isOnGround()) {
+			// if we are on or under a walkable surface
+
+			// if we press the jump button and the character is not airborne at the moment
+			if( (this.controls.upPressed || this.controls.spacePressed) && !char.isAirborne ) {
+				// Launch them
+				char.velY -= char.speedY;
+				char.y += char.velY;
+
+				// Mark them as airborne
+				char.isAirborne = true;
+			} else if (char.isAirborne == true) {
+				console.log((this.game.canvas.height - this.player.height) - char.y, char.velY);
+				// Stop the character in it's tracks
+				char.velY = 0;
+
+				// the frame render is too slow to detect we've hit anything so keeps going. we cheet by just moving the character back to where they should be
+				char.y += char.velY - 13.399999999999693;
+
+				// Mark them as not airborne
+				char.isAirborne = false;
+			}
+
+		} else {
+			// if we are in the air
+			// we're going up
+			if (char.velY < 0) {
+				char.velY += char.decelY;
+			} else {
+				if (char.velY < char.speedY) {
+					char.velY *= char.accellY;
+				}
+			}
+
+			char.y += char.velY;
+		}
+
+
+		// Update the player's position
+		// char.y += char.velY;
 	}
+
 
 	// Clear and redraw the canvas
 	draw() {
