@@ -1386,8 +1386,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           // update player position to start off with
           this.player.x = (this.game.canvas.width - this.player.width) / 2;
-          //this.player.y = (this.game.canvas.height - this.player.height);
-          this.player.y = 0;
+          this.player.y = this.game.canvas.height - this.player.height;
 
           // This is magic... just don't question it but it makes the loop work
           this.gameLoop = this.gameLoop.bind(this);
@@ -1616,6 +1615,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_1ea1be94.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_76a3c4fb.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map

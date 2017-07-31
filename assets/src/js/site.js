@@ -44,8 +44,7 @@ class Game {
 
 		// update player position to start off with
 		this.player.x = (this.game.canvas.width - this.player.width) / 2;
-		//this.player.y = (this.game.canvas.height - this.player.height);
-		this.player.y = 0;
+		this.player.y = (this.game.canvas.height - this.player.height);
 
 		// This is magic... just don't question it but it makes the loop work
 		this.gameLoop = this.gameLoop.bind(this);
