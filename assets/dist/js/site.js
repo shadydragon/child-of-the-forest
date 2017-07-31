@@ -1355,7 +1355,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.game.canvas = canvas;
           this.game.context = this.game.canvas.getContext("2d");
           this.game.world = {
-            gravity: 0.0098 // Accelleration due to gravity, per frame
+            gravity: 0.0098, // Accelleration due to gravity, per frame
+            offset: 0,
+            platforms: [{ thing: 'test2' }, { thing: 'test1' }]
           };
 
           // Controls object
@@ -1436,6 +1438,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             if (e.keyCode == 32) {
               this.controls.spacePressed = false;
             }
+          }
+
+          /** ======================
+          * World object creation
+          ====================== **/
+
+        }, {
+          key: "drawPlatform",
+          value: function drawPlatform() {
+            this.game.world.platforms.forEach(function (object, index) {});
           }
 
           /** ======================
@@ -1577,6 +1589,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             // Update player object
             this.drawPlayer();
+
+            // Update all the platforms
+            this.drawPlatform();
           }
 
           // The game loop
@@ -1615,6 +1630,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_76a3c4fb.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_22b41fce.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map

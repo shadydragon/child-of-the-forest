@@ -14,6 +14,11 @@ class Game {
 		this.game.context = this.game.canvas.getContext("2d");
 		this.game.world = {
 			gravity: 0.0098, // Accelleration due to gravity, per frame
+			offset: 0,
+			platforms: [
+				{thing: 'test2'},
+				{thing:'test1'}
+			]
 		};
 
 		// Controls object
@@ -92,6 +97,14 @@ class Game {
 		}
 	}
 
+	/** ======================
+	* World object creation
+	====================== **/
+	drawPlatform() {
+		this.game.world.platforms.forEach(function(object,index) {
+
+		});
+	}
 
 
 	/** ======================
@@ -150,6 +163,8 @@ class Game {
 	/** ======================
 	* Player NPC interactions
 	====================== **/
+
+
 
 
 	/** ======================
@@ -229,6 +244,9 @@ class Game {
 
 		// Update player object
 		this.drawPlayer();
+
+		// Update all the platforms
+		this.drawPlatform();
 
 	}
 
