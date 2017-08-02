@@ -1360,7 +1360,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               x: 0,
               y: 0
             },
-            platforms: [{ thing: 'test2' }, { thing: 'test1' }]
+            platforms: []
           };
 
           // Controls object
@@ -1391,8 +1391,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           };
 
           // update player position to start off with
-          this.player.x = (this.game.canvas.width - this.player.width) / 2;
-          this.player.y = this.game.canvas.height - this.player.height;
+          //this.player.x = (this.game.canvas.width - this.player.width) / 2;
+          this.player.x = 300;
+          this.player.y = this.game.canvas.height - this.player.height - 300;
 
           // This is magic... just don't question it but it makes the loop work
           this.gameLoop = this.gameLoop.bind(this);
@@ -1449,12 +1450,52 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           ====================== **/
 
         }, {
-          key: "createPlatform",
-          value: function createPlatform() {}
+          key: "createPlatforms",
+          value: function createPlatforms() {
+            this.game.world.platforms = [{
+              type: 'platform',
+              x: 100,
+              y: 100,
+              width: 100,
+              height: 50,
+              colour: '#ff0000'
+            }, {
+              type: 'platform',
+              x: 200,
+              y: 200,
+              width: 100,
+              height: 50,
+              colour: '#ff0000'
+            }, {
+              type: 'platform',
+              x: 300,
+              y: 300,
+              width: 100,
+              height: 50,
+              colour: '#ff0000'
+            }, {
+              type: 'platform',
+              x: 0,
+              y: this.game.canvas.height - 70,
+              width: this.game.canvas.width,
+              height: 60,
+              colour: '#ff0000'
+            }];
+          }
         }, {
           key: "drawPlatform",
           value: function drawPlatform() {
-            this.game.world.platforms.forEach(function (object, index) {});
+            var context = this.game.context;
+
+            this.game.world.platforms.forEach(function (object, index) {
+
+              // Create the platforms
+              context.beginPath();
+              context.rect(object.x, object.y, object.width, object.height);
+              context.fillStyle = object.colour;
+              context.fill();
+              context.closePath();
+            });
           }
 
           /** ======================
@@ -1484,14 +1525,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
           key: "isOnGround",
           value: function isOnGround() {
-            // if we are on the bottom of the stage
-            // -1px to make sure we can see the entire sprite
-            if (this.player.y >= this.game.canvas.height - this.player.height - 1) {
-              return {
-                status: true,
-                floorPos: this.game.canvas.height
-              };
+
+            var player = this.player;
+            var returnObject = void 0;
+
+            // Check if our feet have hit a platform. This is very inefficient
+            var platforms = this.game.world.platforms;
+            for (var thing in platforms) {
+              console.log(player.x + player.width, platforms[thing].x + platforms[thing].width);
+              if (player.y + player.height + 1 > platforms[thing].y && player.y + player.height + 1 < platforms[thing].y + platforms[thing].height && player.x + player.width > platforms[thing].x && player.x < platforms[thing].x + platforms[thing].width) {
+                returnObject = {
+                  status: true,
+                  floorPos: platforms[thing].y
+                };
+                break;
+              } else {
+                returnObject = { status: false };
+              }
+            }
+
+            if (returnObject) {
+              return returnObject;
             } else {
+              // keep falling even if there are o platforms
               return { status: false };
             }
           }
@@ -1549,9 +1605,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             char.x += char.velX;
 
             // Handle Vertical Motion
-            console.log(this.game.canvas.height - this.player.height - char.y);
-            if (this.isOnGround().status) {
+            //console.log((this.game.canvas.height - this.player.height) - char.y);
+
+            var ground = this.isOnGround();
+
+            if (ground.status) {
               // if we are on or under a walkable surface
+
+              var groundDiff = ground.floorPos - char.y - 1;
 
               // if we press the jump button and the character is not airborne at the moment
               if ((this.controls.upPressed || this.controls.spacePressed) && !char.isAirborne) {
@@ -1566,7 +1627,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 char.velY = 0;
 
                 // the frame render is too slow to detect we've hit anything so keeps going. we cheet by just moving the character back to where they should be
-                char.y += char.velY - 13.399999999999693;
+                char.y = ground.floorPos - char.height;
 
                 // Mark them as not airborne
                 char.isAirborne = false;
@@ -1624,6 +1685,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             document.addEventListener("keydown", this.keyDownHandler, false);
             document.addEventListener("keyup", this.keyUpHandler, false);
 
+            this.createPlatforms();
+
             // Kick the game loop into gear
             requestAnimationFrame(this.gameLoop);
           }
@@ -1637,6 +1700,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_59eb61f9.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_3189984f.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map
