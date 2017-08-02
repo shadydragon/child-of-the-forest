@@ -1532,7 +1532,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             // Check if our feet have hit a platform. This is very inefficient
             var platforms = this.game.world.platforms;
             for (var thing in platforms) {
-              console.log(player.x + player.width, platforms[thing].x + platforms[thing].width);
               if (player.y + player.height + 1 > platforms[thing].y && player.y + player.height + 1 < platforms[thing].y + platforms[thing].height && player.x + player.width > platforms[thing].x && player.x < platforms[thing].x + platforms[thing].width) {
                 returnObject = {
                   status: true,
@@ -1590,7 +1589,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             // Handle Horizontal motion
 
-            // handle what actually happens when
+            // handle what actually happens when we move horizontally
             if (this.controls.rightPressed && char.velX < char.speedX) {
               char.velX += char.accellX;
             }
@@ -1605,8 +1604,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             char.x += char.velX;
 
             // Handle Vertical Motion
-            //console.log((this.game.canvas.height - this.player.height) - char.y);
-
             var ground = this.isOnGround();
 
             if (ground.status) {
@@ -1700,6 +1697,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_6ce35c44.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_aefce406.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map

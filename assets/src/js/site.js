@@ -194,7 +194,6 @@ class Game {
 		// Check if our feet have hit a platform. This is very inefficient
 		let platforms = this.game.world.platforms;
 		for (var thing in platforms) {
-			console.log(player.x + player.width, platforms[thing].x + platforms[thing].width);
 			if (player.y + player.height + 1 > platforms[thing].y &&
 				player.y + player.height + 1 < platforms[thing].y + platforms[thing].height &&
 				player.x + player.width > platforms[thing].x &&
@@ -252,7 +251,7 @@ class Game {
 
 		// Handle Horizontal motion
 
-		// handle what actually happens when
+		// handle what actually happens when we move horizontally
 		if(this.controls.rightPressed && char.velX < char.speedX) {
 			char.velX += char.accellX;
 		}
@@ -267,8 +266,6 @@ class Game {
 		char.x += char.velX;
 
 		// Handle Vertical Motion
-		//console.log((this.game.canvas.height - this.player.height) - char.y);
-
 		let ground = this.isOnGround();
 
 		if (ground.status) {
