@@ -282,8 +282,7 @@ class Game {
 				char.velY -= char.speedY;
 				char.y += char.velY;
 
-				// Mark them as airborne
-				char.isAirborne = true;
+
 			} else if (char.isAirborne == true) {
 				// Stop the character in it's tracks
 				char.velY = 0;
@@ -296,6 +295,9 @@ class Game {
 			}
 
 		} else {
+			// Mark them as airborne
+			char.isAirborne = true;
+
 			// if we are in the air
 			// we're going up
 			if (char.velY <= 0) {

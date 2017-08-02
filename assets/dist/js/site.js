@@ -1619,9 +1619,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 // Launch them
                 char.velY -= char.speedY;
                 char.y += char.velY;
-
-                // Mark them as airborne
-                char.isAirborne = true;
               } else if (char.isAirborne == true) {
                 // Stop the character in it's tracks
                 char.velY = 0;
@@ -1633,6 +1630,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 char.isAirborne = false;
               }
             } else {
+              // Mark them as airborne
+              char.isAirborne = true;
+
               // if we are in the air
               // we're going up
               if (char.velY <= 0) {
@@ -1700,6 +1700,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var game = new Game(document.getElementById("gameCanvas"));
         game.init();
       };
-    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_3189984f.js", "/");
+    }).call(this, require("rH1JPG"), typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer, arguments[3], arguments[4], arguments[5], arguments[6], "/fake_6ce35c44.js", "/");
   }, { "buffer": 2, "rH1JPG": 4 }] }, {}, [5]);
 //# sourceMappingURL=site.js.map
